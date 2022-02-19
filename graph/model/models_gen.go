@@ -2,12 +2,9 @@
 
 package model
 
-type Mutations struct {
-	CreateUser *User `json:"createUser"`
-}
-
 type User struct {
-	ID    string `json:"id"`
-	Name  string `json:"name"`
-	Email string `json:"email"`
+	ID        int    `json:"Id"`
+	Firstname string `json:"Firstname"`
+	Lastname  string `json:"Lastname"`
+	Username  string `json:"Username"`
 }

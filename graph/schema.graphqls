@@ -3,15 +3,16 @@
 # https://gqlgen.com/getting-started/
 
 type Query {
-  user: [User!]!
+  users: [User!]!
 }
 
 type User {
-  id: ID!
-  name: String!
-  email: String!
+  Id: Int!
+  Firstname: String!
+  Lastname: String!
+  Username: String!
 }
 
-type Mutations {
-  createUser(name: String!, email: String!): User!
+type Mutation {
+  createUser(Firstname: String!, Lastname: String!, Username: String!): User!
 }

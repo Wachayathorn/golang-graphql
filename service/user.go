@@ -9,14 +9,14 @@ import (
 
 func CreateUser(ctx context.Context, data *model.User) (*model.User, error) {
 	tx := config.SQLX.MustBegin()
-	result, err := tx.Query(`INSERT INTO users(firstname, lastname, username) VALUES($1, $2, $3) RETURNING id`, data.Firstname, data.Lastname, data.Username)
+	var id int64
+	err := tx.QueryRow(`INSERT INTO users(firstname, lastname, username) VALUES($1, $2, $3) RETURNING id`, data.Firstname, data.Lastname, data.Username).Scan(&id)
 	if err != nil {
 		tx.Rollback()
 		return nil, err
 	}
 	tx.Commit()
-	result.Scan(&data.ID)
-	user := &model.User{ID: data.ID, Firstname: data.Firstname, Lastname: data.Lastname, Username: data.Username}
+	user := &model.User{ID: int(id), Firstname: data.Firstname, Lastname: data.Lastname, Username: data.Username}
 	return user, nil
 }
 

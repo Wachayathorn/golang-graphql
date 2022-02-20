@@ -15,4 +15,7 @@ type User {
 
 type Mutation {
   createUser(Firstname: String!, Lastname: String!, Username: String!): User!
+  getUserById(Id: Int!): User!
+  updateUser(Id: Int!, Firstname: String!, Lastname: String!, Username: String!): User!
+  deleteUser(Id: Int!): User!
 }

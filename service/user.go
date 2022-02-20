@@ -68,5 +68,6 @@ func DeleteUser(id int) (*model.Response, error) {
 		return &model.Response{Success: false, Message: "User delete fail"}, err
 	}
 	tx.Commit()
+
 	return &model.Response{Success: true, Message: "User deleted"}, nil
 }

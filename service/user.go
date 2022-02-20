@@ -59,14 +59,14 @@ func UpdateUser(data *model.User) (*model.User, error) {
 	return data, nil
 }
 
-func DeleteUser(id int) (*model.User, error) {
+func DeleteUser(id int) (*model.Response, error) {
 	tx := config.SQLX.MustBegin()
 
 	result, err := tx.Exec(`DELETE FROM users WHERE id = $1`, id)
 	if row, _ := result.RowsAffected(); row == 0 || err != nil {
 		tx.Rollback()
-		return nil, err
+		return &model.Response{Success: false, Message: "User delete fail"}, err
 	}
 	tx.Commit()
-	return nil, nil
+	return &model.Response{Success: true, Message: "User deleted"}, nil
 }

@@ -5,7 +5,6 @@ package graph
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/wachayathorn/golang-graphql/graph/generated"
 	"github.com/wachayathorn/golang-graphql/graph/model"
@@ -21,10 +20,10 @@ func (r *mutationResolver) GetUserByID(ctx context.Context, id int) (*model.User
 }
 
 func (r *mutationResolver) UpdateUser(ctx context.Context, id int, firstname string, lastname string, username string) (*model.User, error) {
-	panic(fmt.Errorf("not implemented"))
+	return service.UpdateUser(&model.User{ID: id, Firstname: firstname, Lastname: lastname, Username: username})
 }
 
-func (r *mutationResolver) DeleteUser(ctx context.Context, id int) (*model.User, error) {
+func (r *mutationResolver) DeleteUser(ctx context.Context, id int) (*model.Response, error) {
 	return service.DeleteUser(id)
 }
 

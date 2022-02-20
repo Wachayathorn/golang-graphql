@@ -2,6 +2,11 @@
 
 package model
 
+type Response struct {
+	Success bool   `json:"success"`
+	Message string `json:"message"`
+}
+
 type User struct {
 	ID        int    `json:"Id"`
 	Firstname string `json:"Firstname"`

@@ -50,8 +50,8 @@ func GetUserById(id int) (*model.User, error) {
 func UpdateUser(data *model.User) (*model.User, error) {
 	tx := config.SQLX.MustBegin()
 
-	err := tx.QueryRow(`UPDATE users SET firstname = $1, lastname = $2, username = $3 WHERE id = $4`, data.Firstname, data.Lastname, data.Username, data.ID).Scan()
-	if err != nil {
+	result, err := tx.Exec(`UPDATE users SET firstname = $1, lastname = $2, username = $3 WHERE id = $4`, data.Firstname, data.Lastname, data.Username, data.ID)
+	if row, _ := result.RowsAffected(); row > 0 && err != nil {
 		tx.Rollback()
 		return nil, err
 	}

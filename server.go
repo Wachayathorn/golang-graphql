@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"os"
 
-	_ "github.com/99designs/gqlgen"
+	// _ "github.com/99designs/gqlgen"
 
 	"github.com/99designs/gqlgen/graphql/handler"
 	"github.com/99designs/gqlgen/graphql/playground"
@@ -25,7 +25,7 @@ func main() {
 
 	// Connect to database
 	config.ConnectDatabaseBySQLX()
-	config.InitDatabase()
+	// config.InitDatabase()
 
 	srv := handler.NewDefaultServer(generated.NewExecutableSchema(generated.Config{Resolvers: &graph.Resolver{}}))
 

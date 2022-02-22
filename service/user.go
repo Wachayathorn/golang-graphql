@@ -5,22 +5,26 @@ import (
 	"github.com/wachayathorn/golang-graphql/repository"
 )
 
-func CreateUser(data *model.User) (*model.User, error) {
-	return repository.CreateUser(data)
+type UserService struct {
+	repository.UserRepository
 }
 
-func GetUsers() ([]*model.User, error) {
-	return repository.GetUser()
+func (s UserService) CreateUser(data *model.User) (*model.User, error) {
+	return s.UserRepository.CreateUser(data)
 }
 
-func GetUserById(id int) (*model.User, error) {
-	return repository.GetUserById(id)
+func (s UserService) GetUsers() ([]*model.User, error) {
+	return s.UserRepository.GetUsers()
 }
 
-func UpdateUser(data *model.User) (*model.User, error) {
-	return repository.UpdateUser(data)
+func (s UserService) GetUserById(id int) (*model.User, error) {
+	return s.UserRepository.GetUserById(id)
 }
 
-func DeleteUser(id int) (*model.Response, error) {
-	return repository.DeleteUser(id)
+func (s UserService) UpdateUser(data *model.User) (*model.User, error) {
+	return s.UserRepository.UpdateUser(data)
+}
+
+func (a UserService) DeleteUser(id int) (*model.Response, error) {
+	return a.UserRepository.DeleteUser(id)
 }

@@ -8,28 +8,26 @@ import (
 
 	"github.com/wachayathorn/golang-graphql/graph/generated"
 	"github.com/wachayathorn/golang-graphql/graph/model"
-	"github.com/wachayathorn/golang-graphql/service"
 )
 
 func (r *mutationResolver) CreateUser(ctx context.Context, firstname string, lastname string, username string) (*model.User, error) {
-	return service.CreateUser(&model.User{Firstname: firstname, Lastname: lastname, Username: username})
+	return r.UserService.CreateUser(&model.User{Firstname: firstname, Lastname: lastname, Username: username})
 }
 
 func (r *mutationResolver) GetUserByID(ctx context.Context, id int) (*model.User, error) {
-	return service.GetUserById(id)
+	return r.UserService.GetUserById(id)
 }
 
 func (r *mutationResolver) UpdateUser(ctx context.Context, id int, firstname string, lastname string, username string) (*model.User, error) {
-	return service.UpdateUser(&model.User{ID: id, Firstname: firstname, Lastname: lastname, Username: username})
+	return r.UserService.UpdateUser(&model.User{ID: id, Firstname: firstname, Lastname: lastname, Username: username})
 }
 
 func (r *mutationResolver) DeleteUser(ctx context.Context, id int) (*model.Response, error) {
-	return service.DeleteUser(id)
+	return r.UserService.DeleteUser(id)
 }
 
 func (r *queryResolver) Users(ctx context.Context) ([]*model.User, error) {
-	users, err := service.GetUsers()
-	return users, err
+	return r.UserService.GetUsers()
 }
 
 // Mutation returns generated.MutationResolver implementation.

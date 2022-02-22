@@ -5,10 +5,12 @@ import (
 	"github.com/wachayathorn/golang-graphql/graph/model"
 )
 
-func CreateUser(input *model.User) (*model.User, error) {
+type UserRepository struct{}
+
+func (r UserRepository) CreateUser(input *model.User) (*model.User, error) {
 	tx := config.SQLX.MustBegin()
 	var user model.User
-	err := tx.QueryRow(`INSERT INTO users(firstname, lastname, username) VALUES($1, $2, $3) RETURNING id`, input.Firstname, input.Lastname, input.Username).Scan(&user.ID, &user.Firstname, &user.Lastname, &user.Username)
+	err := tx.QueryRow(`INSERT INTO users(firstname, lastname, username) VALUES($1, $2, $3) RETURNING id`, input.Firstname, input.Lastname, input.Username).Scan(&user.ID)
 	if err != nil {
 		tx.Rollback()
 		return nil, err
@@ -17,7 +19,7 @@ func CreateUser(input *model.User) (*model.User, error) {
 	return &user, err
 }
 
-func GetUser() ([]*model.User, error) {
+func (r UserRepository) GetUsers() ([]*model.User, error) {
 	var users []*model.User
 	userList, err := config.SQLX.Query(`SELECT * FROM users`)
 
@@ -36,7 +38,7 @@ func GetUser() ([]*model.User, error) {
 	return users, nil
 }
 
-func GetUserById(id int) (*model.User, error) {
+func (r UserRepository) GetUserById(id int) (*model.User, error) {
 	var user model.User
 	err := config.SQLX.Get(&user, `SELECT * FROM users WHERE id = $1`, id)
 	if err != nil {
@@ -45,7 +47,7 @@ func GetUserById(id int) (*model.User, error) {
 	return &user, nil
 }
 
-func UpdateUser(input *model.User) (*model.User, error) {
+func (r UserRepository) UpdateUser(input *model.User) (*model.User, error) {
 	tx := config.SQLX.MustBegin()
 
 	var user model.User
@@ -58,7 +60,7 @@ func UpdateUser(input *model.User) (*model.User, error) {
 	return &user, nil
 }
 
-func DeleteUser(id int) (*model.Response, error) {
+func (r UserRepository) DeleteUser(id int) (*model.Response, error) {
 	tx := config.SQLX.MustBegin()
 
 	result, err := tx.Exec(`DELETE FROM users WHERE id = $1`, id)

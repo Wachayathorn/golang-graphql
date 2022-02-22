@@ -5,6 +5,14 @@ import (
 	"github.com/wachayathorn/golang-graphql/graph/model"
 )
 
+type UserRepositoryInterface interface {
+	CreateUser(input *model.User) (*model.User, error)
+	GetUsers() ([]*model.User, error)
+	GetUserById(id int) (*model.User, error)
+	UpdateUser(input *model.User) (*model.User, error)
+	DeleteUser(id int) (*model.Response, error)
+}
+
 type UserRepository struct{}
 
 func (r UserRepository) CreateUser(input *model.User) (*model.User, error) {

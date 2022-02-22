@@ -11,23 +11,23 @@ import (
 )
 
 func (r *mutationResolver) CreateUser(ctx context.Context, firstname string, lastname string, username string) (*model.User, error) {
-	return r.UserService.CreateUser(&model.User{Firstname: firstname, Lastname: lastname, Username: username})
+	return r.UserServiceInterface.CreateUser(&model.User{Firstname: firstname, Lastname: lastname, Username: username})
 }
 
 func (r *mutationResolver) GetUserByID(ctx context.Context, id int) (*model.User, error) {
-	return r.UserService.GetUserById(id)
+	return r.UserServiceInterface.GetUserById(id)
 }
 
 func (r *mutationResolver) UpdateUser(ctx context.Context, id int, firstname string, lastname string, username string) (*model.User, error) {
-	return r.UserService.UpdateUser(&model.User{ID: id, Firstname: firstname, Lastname: lastname, Username: username})
+	return r.UserServiceInterface.UpdateUser(&model.User{ID: id, Firstname: firstname, Lastname: lastname, Username: username})
 }
 
 func (r *mutationResolver) DeleteUser(ctx context.Context, id int) (*model.Response, error) {
-	return r.UserService.DeleteUser(id)
+	return r.UserServiceInterface.DeleteUser(id)
 }
 
 func (r *queryResolver) Users(ctx context.Context) ([]*model.User, error) {
-	return r.UserService.GetUsers()
+	return r.UserServiceInterface.GetUsers()
 }
 
 // Mutation returns generated.MutationResolver implementation.

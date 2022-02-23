@@ -7,5 +7,5 @@ import "github.com/wachayathorn/golang-graphql/service"
 // It serves as dependency injection for your app, add any dependencies you require here.
 
 type Resolver struct {
-	service.UserServiceInterface
+	service.UserService
 }

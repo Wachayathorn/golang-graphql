@@ -11,7 +11,7 @@ type UserRepositoryMock struct {
 
 func (m UserRepositoryMock) CreateUser(data *model.User) (*model.User, error) {
 	args := m.Called(data)
-	return args.Get(0).(*model.User), args.Error(1)
+	return data, args.Error(1)
 }
 
 func (m UserRepositoryMock) GetUsers() ([]*model.User, error) {
@@ -23,15 +23,18 @@ func (m UserRepositoryMock) GetUsers() ([]*model.User, error) {
 
 func (m UserRepositoryMock) GetUserById(id int) (*model.User, error) {
 	args := m.Called(id)
-	return args.Get(0).(*model.User), args.Error(1)
+	user := model.User{ID: 1, Firstname: "John", Lastname: "Doe", Username: "johndoe"}
+	return &user, args.Error(1)
 }
 
 func (m UserRepositoryMock) UpdateUser(data *model.User) (*model.User, error) {
 	args := m.Called(data)
-	return args.Get(0).(*model.User), args.Error(1)
+	user := model.User{ID: 1, Firstname: "John", Lastname: "Doe", Username: "johndoe"}
+	return &user, args.Error(1)
 }
 
 func (m UserRepositoryMock) DeleteUser(id int) (*model.Response, error) {
 	args := m.Called(id)
-	return args.Get(0).(*model.Response), args.Error(1)
+	response := model.Response{Success: true, Message: "User deleted"}
+	return &response, args.Error(1)
 }

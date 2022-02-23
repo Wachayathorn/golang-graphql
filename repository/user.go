@@ -18,7 +18,7 @@ type UserRepository struct{}
 func (r UserRepository) CreateUser(input *model.User) (*model.User, error) {
 	tx := config.SQLX.MustBegin()
 	var user model.User
-	err := tx.QueryRow(`INSERT INTO users(firstname, lastname, username) VALUES($1, $2, $3) RETURNING id`, input.Firstname, input.Lastname, input.Username).Scan(&user.ID)
+	err := tx.Get(&user, `INSERT INTO users(firstname, lastname, username) VALUES($1, $2, $3) RETURNING id, firstname, lastname, username`, input.Firstname, input.Lastname, input.Username)
 	if err != nil {
 		tx.Rollback()
 		return nil, err

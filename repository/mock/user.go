@@ -29,8 +29,7 @@ func (m UserRepositoryMock) GetUserById(id int) (*model.User, error) {
 
 func (m UserRepositoryMock) UpdateUser(data *model.User) (*model.User, error) {
 	args := m.Called(data)
-	user := model.User{ID: 1, Firstname: "John", Lastname: "Doe", Username: "johndoe"}
-	return &user, args.Error(1)
+	return data, args.Error(1)
 }
 
 func (m UserRepositoryMock) DeleteUser(id int) (*model.Response, error) {
